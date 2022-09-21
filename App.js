@@ -1,20 +1,53 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
+import { Button, TextInput } from 'react-native-paper';
 
-export default function App() {
+import Container from './src/components/Container';
+import Header from './src/components/Header';
+import Body from './src/components/Body';
+import Input from './src/components/Input';
+
+const App = () => {
+
+  const [gas, setGas] = useState();
+  const [eta, setEta] = useState();
+  const [res, setRes] = useState();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Container>
+     <Header title={'Calculadora Flex'}/>
+      <Body>
+        <Input         
+          label='Preço Gasolina'
+          value={gas}
+          onChangeText={(text) => setGas(text)}        
+        />
+        <Input           
+          label='Preço Etanol'
+          value={eta}
+          onChangeText={(text) => setEta(text)}        
+        />
+        <Button
+          mode='contained'
+          onPress={() => { }}
+        >
+          Calcular
+        </Button>
+        <Text style={styles.text}> {res} </Text>
+      </Body>
+    </Container>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  input: {
+    backgroundColor: '#FFF',
+    marginBottom: 8,
   },
+  text: {
+    textAlign: 'center',
+    margin: 8,
+  }
 });
+
+export default App;
