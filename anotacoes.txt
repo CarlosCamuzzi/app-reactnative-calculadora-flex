@@ -14,4 +14,4 @@ const Input = (props) => {
 }
 
 {... props}
-- Define que vai receber todas as propriedades que tem de estilos
+- Define que vai receber todas as propriedades que tem de estilo
