@@ -7,13 +7,14 @@ import Gastos from './Gastos';
 const Home = () => {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
+   
+    { key: 'gastos', title: 'Gastos', focusedIcon: 'gas-station' },
     { key: 'calculadora', title: 'Calculadora', focusedIcon: 'calculator' },
-    { key: 'gastos', title: 'Gastos', focusedIcon: 'gas-station'},
   ]);
 
-  const renderScene = BottomNavigation.SceneMap({
-    calculadora: Calculadora,
+  const renderScene = BottomNavigation.SceneMap({    
     gastos: Gastos,
+    calculadora: Calculadora,
   });
 
   return (
