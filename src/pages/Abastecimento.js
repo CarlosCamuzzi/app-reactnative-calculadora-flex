@@ -27,7 +27,7 @@ const Abastecimento = () => {
               color={'red'}
               onPress={() => setChecked('gas')}
             />
-            <Text>Gasolina</Text>
+            <Text>Gasolia</Text>
           </View>
 
           <View style={styles.radioContainerItem}>
