@@ -56,7 +56,7 @@ const Gastos = () => {
         <FAB
           icon='plus'
           style={styles.fab}
-           onPress={() => navigation.navigate('Abastecimento')}
+          onPress={() => navigation.navigate('Abastecimento')}
         />
       </Body>
     </Container>
