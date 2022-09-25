@@ -33,14 +33,23 @@ const Gastos = () => {
 
   const renderItem = ({ item }) => (
     <List.Item
-      title={'R$ ' + item.valor.toFixed(2) +
-        ' (R$ ' + item.preco.toFixed(2) + ')'}
+      title={
+        'R$ ' + item.valor.toFixed(2) +
+        ' (R$ ' + item.preco.toFixed(2) + ')'
+      }
       description={item.odometro + ' km'}
-      left={props => <List.Icon {...props}
-        color={item.tipo == 0 ? 'red' : 'green'}
-        icon='gas-station' />}
-      right={props => <Text {...props}
-        style={{ alignSelf: 'center' }}>{item.data}</Text>}
+      left={props =>
+        <List.Icon {...props}
+          color={item.tipo == 0 ? 'red' : 'green'}
+          icon='gas-station'
+        />
+      }
+      right={props =>
+        <Text {...props} style={{ alignSelf: 'center' }}>
+          {item.data}
+        </Text>
+      }
+      onPress={() => navigation.navigate('Abastecimento', { item })}
     />
   );
 

@@ -1,22 +1,41 @@
-import React, { useState } from "react";
-import { StyleSheet, View, } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { RadioButton, Text, TextInput, Button, Appbar } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
-import Input from '../components/Input'
+import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment';
 
+import Input from '../components/Input'
 import Container from "../components/Container";
 import Header from "../components/Header";
 import Body from "../components/Body";
 
-const Abastecimento = () => {
+
+const Abastecimento = ({ route }) => {
   const navigation = useNavigation();
-  
+
+  // Se veio dados na rota, então seta os valores, caso contrário, não seta nada
+  const { item } = route.params ? route.params : {};
+
+  const [date, setDate] = useState(new Date());
+  const [show, setShow] = useState(false); // pop up
+
   const [tipo, setTipo] = useState('gas');
-  const [preco, setPreco] = useState();
-  const [valor, setValor] = useState();
-  const [odometro, setOdometro] = useState();
-  const [data, setData] = useState();
+  const [preco, setPreco] = useState('');
+  const [valor, setValor] = useState('');
+  const [odometro, setOdometro] = useState('');
+  const [data, setData] = useState(moment(new Date()).format('DD/MM/YYYY')); // Data atual
+
+  useEffect(() => {
+    if (item) { // Passando os dados para a tela
+      setTipo(item.tipo == 0 ? 'gas' : 'eta')    
+      setData(item.data);
+      setPreco(item.preco.toFixed(2));
+      setValor(item.valor.toFixed(2));
+      setOdometro(item.odometro.toFixed(0));
+    }
+  }, [item]);
 
   const handleSalvar = () => {
     console.log("Salvar");
@@ -33,8 +52,12 @@ const Abastecimento = () => {
         goBack={() => navigation.goBack()} // Só se houver tela empilhada        
       >
         <Appbar.Action icon='check' onPress={() => handleSalvar()} />
-        <Appbar.Action icon='trash-can' onPress={() => handleExcluir()} />
+        { // Se o item existir
+          item &&
+          <Appbar.Action icon='trash-can' onPress={() => handleExcluir()} />
+        }
       </Header>
+
       <Body>
         <View style={styles.radioContainer}>
           <View style={styles.radioContainerItem}>
@@ -58,12 +81,31 @@ const Abastecimento = () => {
           </View>
         </View>
 
-        <Input
-          label='Data'
-          value={data}
-          left={<TextInput.Icon icon='calendar' />}
-          onChangeText={(text) => setData(text)}
-        />
+        { // Configuração Date
+          show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={date}
+              mode={'date'}
+              is24Hour={true}
+              display='default'
+              onTouchCancel={() => setShow(false)} // Para fechar
+              onChange={(event, date) => {
+                setShow(false);
+                setData(moment(date).format('DD/MM/YYYY'));
+              }}
+            />
+          )}
+
+        <TouchableOpacity onPress={() => setShow(true)}>
+          <Input
+            label='Data'
+            value={data}
+            left={<TextInput.Icon icon='calendar' />}
+            editable={false}
+          />
+        </TouchableOpacity>
+
         <Input
           label='Preço'
           value={preco}
@@ -89,12 +131,15 @@ const Abastecimento = () => {
           onPress={() => handleSalvar()}
         >Salvar </Button>
 
-        <Button
-          style={styles.btn}
-          mode='contained'
-          buttonColor={'red'}
-          onPress={() => handleExcluir()}
-        >Excluir </Button>
+        { // Só renderiza se houver item (na rota)
+          item &&
+          <Button
+            style={styles.btn}
+            mode='contained'
+            buttonColor={'red'}
+            onPress={() => handleExcluir()}
+          >Excluir </Button>
+        }
 
       </Body>
     </Container>
