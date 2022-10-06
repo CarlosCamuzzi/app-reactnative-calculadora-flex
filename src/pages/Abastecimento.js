@@ -11,6 +11,8 @@ import Container from "../components/Container";
 import Header from "../components/Header";
 import Body from "../components/Body";
 
+import { insertGastos } from "../services/GastosServiceDB";
+
 
 const Abastecimento = ({ route }) => {
   const navigation = useNavigation();
@@ -29,7 +31,7 @@ const Abastecimento = ({ route }) => {
 
   useEffect(() => {
     if (item) { // Passando os dados para a tela
-      setTipo(item.tipo == 0 ? 'gas' : 'eta')    
+      setTipo(item.tipo == 0 ? 'gas' : 'eta')
       setData(item.data);
       setPreco(item.preco.toFixed(2));
       setValor(item.valor.toFixed(2));
@@ -37,8 +39,20 @@ const Abastecimento = ({ route }) => {
     }
   }, [item]);
 
+  // Se não houver o item, chama insert, se houver chama update
   const handleSalvar = () => {
-    console.log("Salvar");
+    if (!item) {
+      insertGastos({
+        tipo: tipo == 'gas' ? 0 : 1,
+        data: data,
+        preco: preco,
+        valor: valor,
+        odometro: odometro,
+      }).then();
+    } else {
+
+    }
+    navigation.goBack();
   }
 
   const handleExcluir = () => {

@@ -12,33 +12,15 @@ import { getGastos, insertGastos } from "../services/GastosServiceDB";
 
 import { useIsFocused } from '@react-navigation/native';
 
-
-DATA = [
-  {
-    id: 1,
-    tipo: 0,
-    data: '15/01/22',
-    preco: 6.77,
-    valor: 115,
-    odometro: 22000
-  }
-]
-
 const Gastos = () => {
 
   const navigation = useNavigation();
   const [gastos, setGastos] = useState([]);
   const isFocused = useIsFocused();
 
-  useEffect(() => {
-    // insertGastos({
-    //   tipo: 0,
-    //   data: '15/12/2022',
-    //   preco: 8.59,
-    //   valor: 18.99,
-    //   odometro: 2000,
-    // }).then();
+  useEffect(() => {  
     getGastos().then((dados) => {
+      console.log(dados); // TESTE OK
       setGastos(dados);
     });
   }, [isFocused]);
