@@ -1,9 +1,10 @@
-import Database from "./DBServices";
+import Database from './DBServices';
 
 const DB_EXEC = Database.getConnection();
 
 export const getGastos = async () => {
-  let results = await DB_EXEC('SELECT * FROM gastos;');
+  let results = await DB_EXEC('SELECT * FROM gastos');
+  //console.log(results);
   return results.rows._array;
 }
 

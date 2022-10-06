@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet } from "react-native";
 
 import { FAB, List, Text } from 'react-native-paper';
@@ -8,28 +8,40 @@ import Container from "../components/Container";
 import Header from "../components/Header";
 import Body from "../components/Body";
 
-const DATA = [
+import { getGastos, insertGastos } from "../services/GastosServiceDB";
+
+import { useIsFocused } from '@react-navigation/native';
+
+
+DATA = [
   {
     id: 1,
     tipo: 0,
-    data: '01/01/2022',
+    data: '15/01/22',
     preco: 6.77,
-    valor: 100,
+    valor: 115,
     odometro: 22000
-  },
-  {
-    id: 2,
-    tipo: 1,
-    data: '15/01/2022',
-    preco: 4.77,
-    valor: 150,
-    odometro: 32000
-  },
+  }
 ]
 
 const Gastos = () => {
 
   const navigation = useNavigation();
+  const [gastos, setGastos] = useState([]);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    // insertGastos({
+    //   tipo: 0,
+    //   data: '15/12/2022',
+    //   preco: 8.59,
+    //   valor: 18.99,
+    //   odometro: 2000,
+    // }).then();
+    getGastos().then((dados) => {
+      setGastos(dados);
+    });
+  }, [isFocused]);
 
   const renderItem = ({ item }) => (
     <List.Item
@@ -58,7 +70,7 @@ const Gastos = () => {
       <Header title="Fuel Manager" />
       <Body>
         <FlatList
-          data={DATA}
+          data={gastos}
           renderItem={renderItem}
           keyExtractor={item => item.id}
         />
