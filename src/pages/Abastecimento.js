@@ -11,7 +11,7 @@ import Container from "../components/Container";
 import Header from "../components/Header";
 import Body from "../components/Body";
 
-import { insertGastos } from "../services/GastosServiceDB";
+import { insertGastos, updateGastos, deleteGastos } from "../services/GastosServiceDB";
 
 
 const Abastecimento = ({ route }) => {
@@ -49,14 +49,23 @@ const Abastecimento = ({ route }) => {
         valor: valor,
         odometro: odometro,
       }).then();
-    } else {
-
+    } else { 
+     // console.log(item) // TESTE OK
+      updateGastos({
+        tipo: tipo == 'gas' ? 0 : 1,
+        data: data,
+        preco: preco,
+        valor: valor,
+        odometro: odometro,
+        id: item.id,
+      }).then();
     }
     navigation.goBack();
   }
 
   const handleExcluir = () => {
-    console.log("Excluir");
+    deleteGastos(item.id).then();
+    navigation.goBack();
   }
 
   return (

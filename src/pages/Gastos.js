@@ -20,7 +20,7 @@ const Gastos = () => {
 
   useEffect(() => {  
     getGastos().then((dados) => {
-      console.log(dados); // TESTE OK
+      //console.log(dados); // TESTE OK
       setGastos(dados);
     });
   }, [isFocused]);

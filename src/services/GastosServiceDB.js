@@ -4,7 +4,7 @@ const DB_EXEC = Database.getConnection();
 
 export const getGastos = async () => {
   let results = await DB_EXEC('SELECT * FROM gastos;');
-  // console.log(results);
+  // console.log(results); // TESTE OK
   return results.rows._array;
 }
 
@@ -21,7 +21,7 @@ export const updateGastos = async (param) => {
   return results.rowsAffected;
 }
 
-export const deleteGastos = async (param) => {
-  let results = await DB_EXEC('DELETE gastos WHERE id=?;');
+export const deleteGastos = async (id) => {
+  let results = await DB_EXEC('DELETE FROM gastos WHERE id=?;', [id]);
   return results.rowsAffected;
 }
