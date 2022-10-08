@@ -3,13 +3,20 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Abastecimento from "../pages/Abastecimento";
 import Home from "../pages/Home";
-import Header from "../components/Header";
+import Register from "../pages/Register";
 
 const Stack = createNativeStackNavigator();
 
 const Main = () => {
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator initialRouteName="Register">
+      <Stack.Screen
+        name='Register'
+        component={Register}
+        options={{
+          header: () => null
+        }}
+      />
       <Stack.Screen
         name='Home'
         component={Home}
