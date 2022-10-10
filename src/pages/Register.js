@@ -19,7 +19,7 @@ const Register = () => {
   const [password, setPassword] = useState('pucminas');
 
   const handleRegister = () => {
-
+    // Parâmetros necessários para cadastrar o usuário
     register({
       name: name,
       email: email,
@@ -32,7 +32,7 @@ const Register = () => {
           { text: "OK", onPress: () => navigation.goBack() }
         ]);
       }else{
-         Alert.alert('Atenção', 'Usuário não cadastrado! Tente novamente mais tarde =D');
+         Alert.alert('Atenção', 'Usuário não cadastrado! Tente novamente mais tarde');
       }
     });    
   }
