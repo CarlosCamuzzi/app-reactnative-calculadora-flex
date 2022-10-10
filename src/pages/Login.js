@@ -7,7 +7,13 @@ import Body from "../components/Body";
 import Input from "../components/Input";
 import Logo from "../components/Logo";
 
+import { useNavigation } from "@react-navigation/native";
+import { useUser } from "../contexts/UserContext";
+
 const Login = () => {
+
+  const navigation = useNavigation();
+  const { setSigned } = useUser();
 
   const [email, setEmail] = useState('carlos@pucminas.br');
   const [password, setPassword] = useState('pucminas')
@@ -35,13 +41,13 @@ const Login = () => {
         <Button
           style={styles.button}
           mode="contained"
-          onPress={() => { }}>
+          onPress={() => setSigned(true)}>
           LOGIN
         </Button>
         <Button
           style={styles.button}
           mode="outlined"
-          onPress={() => { }}>
+          onPress={() => navigation.navigate('Register')}>
           REGISTER
         </Button>
       </Body>

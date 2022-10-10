@@ -5,7 +5,7 @@ export const UserContext = createContext();
 const UserProvider = ({ children }) => {
 
   const [signed, setSigned] = useState(false);
-  const [name, setName] = useState('');
+  const [name, setName] = useState(false);
   
   return (
     <UserContext.Provider
@@ -15,6 +15,7 @@ const UserProvider = ({ children }) => {
         name, 
         setName
       }}>
+      {console.log(signed)}
       {children}  
     </UserContext.Provider>
   );
