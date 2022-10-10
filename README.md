@@ -8,3 +8,6 @@
 * React Native Paper
 * React Navigation
 * SQLite
+* JSON Server
+* JSON Auth
+* Axios
