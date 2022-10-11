@@ -12,11 +12,15 @@ import { getGastos, insertGastos } from "../services/GastosServiceDB";
 
 import { useIsFocused } from '@react-navigation/native';
 
+import { useUser } from "../contexts/UserContext";
+
 const Gastos = () => {
 
   const navigation = useNavigation();
   const [gastos, setGastos] = useState([]);
   const isFocused = useIsFocused();
+
+  const { name } = useUser();
 
   useEffect(() => {  
     getGastos().then((dados) => {
@@ -49,7 +53,7 @@ const Gastos = () => {
 
   return (
     <Container>
-      <Header title="Fuel Manager" />
+      <Header title={"Olá " + name} />
       <Body>
         <FlatList
           data={gastos}

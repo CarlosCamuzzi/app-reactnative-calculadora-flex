@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Alert } from 'react-native';
 import { TextInput, Button, Headline } from "react-native-paper";
 
 import Container from "../components/Container";
@@ -10,13 +10,30 @@ import Logo from "../components/Logo";
 import { useNavigation } from "@react-navigation/native";
 import { useUser } from "../contexts/UserContext";
 
+import { login } from "../backend/auth.services";
+
 const Login = () => {
 
   const navigation = useNavigation();
-  const { setSigned } = useUser();
+  // Validar Autenticação em handleLogin
+  const { setSigned, setName } = useUser();
 
   const [email, setEmail] = useState('carlos@pucminas.br');
   const [password, setPassword] = useState('pucminas')
+
+  const handleLogin = () => {
+    login({
+      email: email,
+      password: password
+    }).then(res => {
+      if (res && res.user) {
+        setSigned(true);
+        setName(res.user.name);
+      } else {
+        Alert.alert('Atenção', 'Usuário ou senha inválidos!');
+      }
+    });
+  }
 
   return (
     <Container>
@@ -41,7 +58,7 @@ const Login = () => {
         <Button
           style={styles.button}
           mode="contained"
-          onPress={() => setSigned(true)}>
+          onPress={() => handleLogin()}>
           LOGIN
         </Button>
         <Button
