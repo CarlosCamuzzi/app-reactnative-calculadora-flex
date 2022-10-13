@@ -11,7 +11,7 @@ import Container from "../components/Container";
 import Header from "../components/Header";
 import Body from "../components/Body";
 
-import { insertGastos, updateGastos, deleteGastos } from "../services/GastosServiceDB";
+import { insertGastos, updateGastos, deleteGastos } from "../backend/gastos.services";
 
 
 const Abastecimento = ({ route }) => {
@@ -29,13 +29,26 @@ const Abastecimento = ({ route }) => {
   const [odometro, setOdometro] = useState('');
   const [data, setData] = useState(moment(new Date()).format('DD/MM/YYYY')); // Data atual
 
-  useEffect(() => {
-    if (item) { // Passando os dados para a tela
-      setTipo(item.tipo == 0 ? 'gas' : 'eta')
+  /* Para usar com o SQLite, atentar para colocar o .ToFixed para formatar 
+  o preço e valor, pois ambos são real */
+  // useEffect(() => {
+  //   if (item) { // Passando os dados para a tela
+  //     setTipo(item.tipo == 0 ? 'gas' : 'eta')
+  //     setData(item.data);
+  //     setPreco(item.preco.toFixed(2));
+  //     setValor(item.valor.toFixed(2));
+  //     setOdometro(item.odometro.toFixed(0));
+  //   }
+  // }, [item]);
+
+  // JSON SERVER
+  useEffect(() =>{
+    if(item){
+      setTipo(item.tipo == 0? 'gas': 'eta');
       setData(item.data);
-      setPreco(item.preco.toFixed(2));
-      setValor(item.valor.toFixed(2));
-      setOdometro(item.odometro.toFixed(0));
+      setPreco(item.preco);
+      setValor(item.valor);
+      setOdometro(item.odometro);
     }
   }, [item]);
 
@@ -50,7 +63,6 @@ const Abastecimento = ({ route }) => {
         odometro: odometro,
       }).then();
     } else { 
-     // console.log(item) // TESTE OK
       updateGastos({
         tipo: tipo == 'gas' ? 0 : 1,
         data: data,

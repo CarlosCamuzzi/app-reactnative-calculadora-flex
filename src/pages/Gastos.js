@@ -8,7 +8,7 @@ import Container from "../components/Container";
 import Header from "../components/Header";
 import Body from "../components/Body";
 
-import { getGastos, insertGastos } from "../services/GastosServiceDB";
+import { getGastos } from "../backend/gastos.services";
 
 import { useIsFocused } from '@react-navigation/native';
 
@@ -29,25 +29,28 @@ const Gastos = () => {
     });
   }, [isFocused]);
 
+  /* Para usar com o SQLite, atentar para colocar o .ToFixed para formatar 
+  o preço e valor, pois ambos são real */
   const renderItem = ({ item }) => (
     <List.Item
       title={
-        'R$ ' + item.valor.toFixed(2) +
-        ' (R$ ' + item.preco.toFixed(2) + ')'
+        'R$' + item.valor + ' (R$' + item.preco + ')'
       }
       description={item.odometro + ' km'}
-      left={props =>
-        <List.Icon {...props}
+      left={(props) => (
+        <List.Icon
+          {...props}
           color={item.tipo == 0 ? 'red' : 'green'}
-          icon='gas-station'
+          icon="gas-station"
         />
-      }
-      right={props =>
+      )}
+      right={(props) => (
         <Text {...props} style={{ alignSelf: 'center' }}>
-          {item.data}
+          {' '}
+          {item.data}{' '}
         </Text>
-      }
-      onPress={() => navigation.navigate('Abastecimento', { item })}
+      )}
+      onPress={() => navigation.navigate('Abastecimento', {item})}
     />
   );
 

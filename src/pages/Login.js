@@ -26,6 +26,7 @@ const Login = () => {
       email: email,
       password: password
     }).then(res => {
+      console.log(email, password);
       if (res && res.user) {
         setSigned(true);
         setName(res.user.name);
