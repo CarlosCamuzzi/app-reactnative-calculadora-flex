@@ -10,6 +10,7 @@ import Logo from "../components/Logo";
 import { useNavigation } from "@react-navigation/native";
 import { useUser } from "../contexts/UserContext";
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { login } from "../backend/auth.services";
 
 const Login = () => {
@@ -30,6 +31,8 @@ const Login = () => {
       if (res && res.user) {
         setSigned(true);
         setName(res.user.name);
+        // Setando o token no asyncstorage para fazer a validação em webapi.services
+        AsyncStorage.setItem('@TOKEN_KEY', res.accessToken).then(); 
       } else {
         Alert.alert('Atenção', 'Usuário ou senha inválidos!');
       }

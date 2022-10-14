@@ -1,31 +1,31 @@
-// import * as SQLite from 'expo-sqlite';
+import * as SQLite from 'expo-sqlite';
 
-// const Database = {
-//   getConnection: () => {
+const Database = {
+  getConnection: () => {
     
-//     const db = SQLite.openDatabase('fuel_manager.db');
+    const db = SQLite.openDatabase('fuel_manager.db');
 
-//     db.transaction((tx) => {
-//       tx.executeSql(   'create table if not exists gastos (id integer primary key not null, tipo int not null, data text not null, preco real not null, valor real not null, odometro real not null);');
-//     });
+    db.transaction((tx) => {
+      tx.executeSql(   'create table if not exists gastos (id integer primary key not null, tipo int not null, data text not null, preco real not null, valor real not null, odometro real not null);');
+    });
 
-//     const ExecuteQuery = (sql, params = []) => 
-//       new Promise((resolve, reject) => {
-//         db.transaction((trans) => {
-//           trans.executeSql(
-//             sql,
-//             params,
-//             (__, results) => {
-//               resolve(results);
-//             },
-//             (error) => {           
-//               reject(error);
-//             }
-//           );
-//         });
-//       });    
-//     return ExecuteQuery;
-//   }
-// }
+    const ExecuteQuery = (sql, params = []) => 
+      new Promise((resolve, reject) => {
+        db.transaction((trans) => {
+          trans.executeSql(
+            sql,
+            params,
+            (__, results) => {
+              resolve(results);
+            },
+            (error) => {           
+              reject(error);
+            }
+          );
+        });
+      });    
+    return ExecuteQuery;
+  }
+}
 
-// export default Database;
+export default Database;
